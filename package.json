@@ -3,7 +3,7 @@
   "displayName": "Padauk Mini-C",
   "description": "Syntax highlighting for Padauk Mini-C (FPPA / PDK microcontrollers): compile-time directives, macros, PDK assembly mnemonics, SFRs and pin configuration statements.",
   "version": "1.0.0",
-  "publisher": "local",
+  "publisher": "pastaclub",
   "license": "MIT",
   "icon": "icon.png",
   "engines": {
