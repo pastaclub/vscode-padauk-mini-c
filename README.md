@@ -57,6 +57,14 @@ source of truth.
 
 ## Install
 
+From the Marketplace: search for **Padauk Mini-C** in the Extensions view, or
+
+```sh
+code --install-extension pastaclub.padauk-minic
+```
+
+### From source
+
 ```sh
 ./install.sh
 ```
@@ -65,7 +73,7 @@ That regenerates the grammar, packs a `.vsix` and installs it with the `code` CL
 (needs only python3, zip and the `code` command - no npm, no vsce). Then reload the
 window: `Developer: Reload Window`.
 
-To remove it: `code --uninstall-extension local.padauk-minic`.
+To remove it: `code --uninstall-extension pastaclub.padauk-minic`.
 
 ## License
 

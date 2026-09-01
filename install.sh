@@ -47,7 +47,7 @@ python3 tools/gen_grammar.py
 echo "==> staging"
 rm -rf "$BUILD"
 mkdir -p "$BUILD/extension"
-for f in package.json README.md icon.png language-configuration.json syntaxes snippets tools; do
+for f in package.json README.md icon.png language-configuration.json syntaxes snippets; do
   cp -R "$f" "$BUILD/extension/"
 done
 cp LICENSE "$BUILD/extension/LICENSE.txt"   # OPC wants a known file extension
@@ -59,7 +59,10 @@ build = sys.argv[1]
 p = json.load(open("package.json"))
 esc = x.escape
 tags = ",".join(p.get("keywords", []))
-cats = "".join("<Category>%s</Category>" % esc(c) for c in p.get("categories", []))
+# The VS Code Marketplace wants a plain comma-separated string here. The nested
+# <Category> form is the Visual Studio (not VS Code) manifest style and is rejected
+# on upload with "The category '...' is not available in language 'en-us'".
+cats = ",".join(p.get("categories", []))
 
 open(build + "/extension.vsixmanifest", "w").write(f'''<?xml version="1.0" encoding="utf-8"?>
 <PackageManifest Version="2.0.0" xmlns="http://schemas.microsoft.com/developer/vsx-schema/2011">
@@ -68,7 +71,7 @@ open(build + "/extension.vsixmanifest", "w").write(f'''<?xml version="1.0" encod
     <DisplayName>{esc(p['displayName'])}</DisplayName>
     <Description xml:space="preserve">{esc(p['description'])}</Description>
     <Tags>{esc(tags)}</Tags>
-    <Categories>{cats}</Categories>
+    <Categories>{esc(cats)}</Categories>
     <GalleryFlags>Public</GalleryFlags>
     <Properties>
       <Property Id="Microsoft.VisualStudio.Code.Engine" Value="{esc(p['engines']['vscode'])}" />
