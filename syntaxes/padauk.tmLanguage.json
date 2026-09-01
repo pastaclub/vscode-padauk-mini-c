@@ -1,0 +1,522 @@
+{
+  "$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+  "name": "Padauk Mini-C",
+  "scopeName": "source.padauk",
+  "fileTypes": [
+    "c",
+    "h",
+    "pdkc",
+    "pdkh",
+    "minic"
+  ],
+  "patterns": [
+    {
+      "include": "#comments"
+    },
+    {
+      "include": "#preprocessor"
+    },
+    {
+      "include": "#directives"
+    },
+    {
+      "include": "#macro-definition"
+    },
+    {
+      "include": "#equ-definition"
+    },
+    {
+      "include": "#pin-config"
+    },
+    {
+      "include": "#function-definition"
+    },
+    {
+      "include": "#label"
+    },
+    {
+      "include": "#strings"
+    },
+    {
+      "include": "#numbers"
+    },
+    {
+      "include": "#units"
+    },
+    {
+      "include": "#keywords"
+    },
+    {
+      "include": "#instructions"
+    },
+    {
+      "include": "#registers"
+    },
+    {
+      "include": "#chips"
+    },
+    {
+      "include": "#local-label"
+    },
+    {
+      "include": "#macro-param"
+    },
+    {
+      "include": "#byte-index"
+    },
+    {
+      "include": "#function-call"
+    },
+    {
+      "include": "#operators"
+    },
+    {
+      "include": "#bit-access"
+    },
+    {
+      "include": "#macro-call"
+    }
+  ],
+  "repository": {
+    "comments": {
+      "patterns": [
+        {
+          "name": "comment.block.padauk",
+          "begin": "/\\*",
+          "end": "\\*/",
+          "captures": {
+            "0": {
+              "name": "punctuation.definition.comment.padauk"
+            }
+          }
+        },
+        {
+          "name": "comment.line.double-slash.padauk",
+          "begin": "//",
+          "end": "$",
+          "beginCaptures": {
+            "0": {
+              "name": "punctuation.definition.comment.padauk"
+            }
+          }
+        }
+      ]
+    },
+    "preprocessor": {
+      "patterns": [
+        {
+          "name": "meta.preprocessor.padauk",
+          "begin": "^[ \\t]*(#)[ \\t]*(include|define|undef|ifdef|ifndef|if|elif|else|endif|pragma|error|line)\\b",
+          "beginCaptures": {
+            "1": {
+              "name": "punctuation.definition.directive.padauk"
+            },
+            "2": {
+              "name": "keyword.control.directive.padauk"
+            }
+          },
+          "end": "(?=//)|(?=/\\*)|$",
+          "patterns": [
+            {
+              "include": "#strings"
+            },
+            {
+              "include": "#numbers"
+            }
+          ]
+        }
+      ]
+    },
+    "directives": {
+      "patterns": [
+        {
+          "match": "(?:^|(?<=[\\s(;{}]))(\\.(?i:define|undef))[ \\t]+([A-Za-z_][A-Za-z0-9_]*)",
+          "captures": {
+            "1": {
+              "name": "keyword.control.directive.padauk"
+            },
+            "2": {
+              "name": "entity.name.function.preprocessor.padauk"
+            }
+          }
+        },
+        {
+          "begin": "(?:^|(?<=[\\s(;{}]))(\\.(?i:echo|warning|error|message))\\b",
+          "beginCaptures": {
+            "1": {
+              "name": "keyword.control.directive.padauk"
+            }
+          },
+          "end": "(?=//)|(?=/\\*)|$",
+          "contentName": "string.unquoted.message.padauk"
+        },
+        {
+          "name": "keyword.control.directive.padauk",
+          "match": "(?:^|(?<=[\\s(;{}]))\\.(?i:noreassembly|reassembly|adjust_ic|outfile|message|warning|romadr|ramadr|sysclk|nolist|repeat|ifidni|ifdifi|ifndef|elseif|printf|define|align|stack|local|exitm|while|break|ifidn|ifdif|ifdef|endif|error|delay|wait0|wait1|undef|chip|code|data|list|endm|forc|elif|else|echo|errz|for|if)\\b"
+        },
+        {
+          "name": "keyword.control.directive.padauk",
+          "match": "(?:^|(?<=[\\s(;{}]))\\.[A-Za-z_][A-Za-z0-9_]*\\b"
+        }
+      ]
+    },
+    "macro-definition": {
+      "patterns": [
+        {
+          "match": "^[ \\t]*([A-Za-z_][A-Za-z0-9_]*)[ \\t]+(?i:(macro))\\b",
+          "captures": {
+            "1": {
+              "name": "entity.name.function.macro.padauk"
+            },
+            "2": {
+              "name": "storage.type.macro.padauk"
+            }
+          }
+        }
+      ]
+    },
+    "equ-definition": {
+      "patterns": [
+        {
+          "match": "^[ \\t]*([A-Za-z_][A-Za-z0-9_]*)[ \\t]+(?i:(equ))\\b",
+          "captures": {
+            "1": {
+              "name": "entity.name.constant.padauk"
+            },
+            "2": {
+              "name": "storage.type.equ.padauk"
+            }
+          }
+        }
+      ]
+    },
+    "pin-config": {
+      "patterns": [
+        {
+          "name": "meta.pin-config.padauk",
+          "begin": "(?:^|(?<=[\\s;{}()]))(\\$)(?![0-9])",
+          "beginCaptures": {
+            "1": {
+              "name": "keyword.control.pin-config.padauk"
+            }
+          },
+          "end": "(?=;)|$",
+          "patterns": [
+            {
+              "include": "#comments"
+            },
+            {
+              "name": "support.constant.pin-config.padauk",
+              "match": "\\b(?i:disable|inverse|falling|bandgap|enable|period|invert|rising|sysclk|12bit|10bit|clean|pull|high|both|ihrc|ilrc|eosc|xtal|8bit|down|out|low|pwm|vdd|adc|yes|bit|in|no|up)\\b"
+            },
+            {
+              "include": "#numbers"
+            },
+            {
+              "include": "#registers"
+            },
+            {
+              "include": "#chips"
+            },
+            {
+              "include": "#bit-access"
+            },
+            {
+              "include": "#operators"
+            }
+          ]
+        }
+      ]
+    },
+    "function-definition": {
+      "patterns": [
+        {
+          "match": "\\b(?:(extern|static)[ \\t]+)?(void|bit|byte|word)[ \\t]+([A-Za-z_][A-Za-z0-9_]*)[ \\t]*(?=\\()",
+          "captures": {
+            "1": {
+              "name": "storage.modifier.padauk"
+            },
+            "2": {
+              "name": "storage.type.padauk"
+            },
+            "3": {
+              "name": "entity.name.function.padauk"
+            }
+          }
+        }
+      ]
+    },
+    "label": {
+      "patterns": [
+        {
+          "match": "^[ \\t]*(?!(?:case|default)\\b)([A-Za-z_][A-Za-z0-9_]*)((?:#[A-Za-z0-9_]+)?)[ \\t]*(:)(?!:)",
+          "captures": {
+            "1": {
+              "name": "entity.name.label.padauk"
+            },
+            "2": {
+              "name": "entity.name.label.padauk"
+            },
+            "3": {
+              "name": "punctuation.separator.label.padauk"
+            }
+          }
+        }
+      ]
+    },
+    "strings": {
+      "patterns": [
+        {
+          "name": "string.quoted.double.padauk",
+          "begin": "\"",
+          "end": "\"",
+          "patterns": [
+            {
+              "name": "constant.character.escape.padauk",
+              "match": "\\\\."
+            }
+          ]
+        },
+        {
+          "name": "string.quoted.single.padauk",
+          "begin": "'",
+          "end": "'",
+          "patterns": [
+            {
+              "name": "constant.character.escape.padauk",
+              "match": "\\\\."
+            }
+          ]
+        },
+        {
+          "name": "string.other.angle.padauk",
+          "match": "(?<=[\\s,(])<[A-Za-z0-9_./\\\\-]+>"
+        }
+      ]
+    },
+    "numbers": {
+      "patterns": [
+        {
+          "name": "constant.numeric.binary.padauk",
+          "match": "\\b0[bB][01_]+\\b"
+        },
+        {
+          "name": "constant.numeric.hex.padauk",
+          "match": "\\b0[xX][0-9a-fA-F_]+\\b"
+        },
+        {
+          "name": "constant.numeric.hex.padauk",
+          "match": "\\b[0-9][0-9a-fA-F_]*[hH]\\b"
+        },
+        {
+          "match": "\\b([0-9][0-9_]*(?:\\.[0-9]+)?)(KHz|kHz|MHz|Hz|mV|ms|us|ns|V)\\b",
+          "captures": {
+            "1": {
+              "name": "constant.numeric.decimal.padauk"
+            },
+            "2": {
+              "name": "keyword.other.unit.padauk"
+            }
+          }
+        },
+        {
+          "name": "constant.numeric.decimal.padauk",
+          "match": "\\b[0-9][0-9_]*\\.[0-9]+\\b"
+        },
+        {
+          "name": "constant.numeric.decimal.padauk",
+          "match": "\\b[0-9][0-9_]*\\b"
+        }
+      ]
+    },
+    "units": {
+      "patterns": [
+        {
+          "match": "(?<=[0-9A-Za-z_])[ \\t]+(KHz|kHz|MHz|Hz|mV|ms|us|ns|V)\\b(?=[ \\t]*[,;)])",
+          "captures": {
+            "1": {
+              "name": "keyword.other.unit.padauk"
+            }
+          }
+        }
+      ]
+    },
+    "keywords": {
+      "patterns": [
+        {
+          "name": "keyword.control.padauk",
+          "match": "\\b(continue|default|elseif|switch|return|while|break|else|case|goto|for|if|do)\\b"
+        },
+        {
+          "name": "storage.type.padauk",
+          "match": "\\b(struct|sbyte|sword|void|byte|word|bit)\\b"
+        },
+        {
+          "name": "storage.modifier.padauk",
+          "match": "\\b(volatile|unsigned|static|extern|signed|const)\\b"
+        },
+        {
+          "name": "storage.type.macro.padauk",
+          "match": "\\b(?i:macro|equ)\\b"
+        }
+      ]
+    },
+    "instructions": {
+      "patterns": [
+        {
+          "match": "(?:^|(?<=[;{}:)]))[ \\t]*\\b(disgint|pushwpc|stopexe|stopsys|wdreset|cneqsn|engint|ldspth|ldsptl|ldtabh|ldtabl|popwpc|pushaf|ceqsn|clear|delay|icall|igoto|ldt16|pcadd|popaf|pushw|reset|stt16|swapc|wait0|wait1|addc|call|comp|dzsn|idxm|izsn|nadd|nmov|popw|reti|set0|set1|subc|swap|t0sn|t1sn|add|and|dec|inc|mov|mul|neg|nop|not|ret|slc|src|sub|tog|xch|xor|or|sl|sr)\\b",
+          "captures": {
+            "1": {
+              "name": "keyword.other.instruction.padauk"
+            }
+          }
+        }
+      ]
+    },
+    "registers": {
+      "patterns": [
+        {
+          "name": "variable.language.register.padauk",
+          "match": "\\b(SP|PC|CF|ZF|AC|OV|A)\\b"
+        },
+        {
+          "name": "support.variable.sfr.padauk",
+          "match": "\\bP[A-C](?:C|PH|PL|DIER)?\\b"
+        },
+        {
+          "name": "support.variable.sfr.padauk",
+          "match": "\\bTM[0-9][A-Z]{1,3}\\b"
+        },
+        {
+          "name": "support.variable.sfr.padauk",
+          "match": "\\bADC[A-Z]{0,4}\\b"
+        },
+        {
+          "name": "support.variable.sfr.padauk",
+          "match": "\\bL?PWMG[0-9][A-Z]*\\b"
+        },
+        {
+          "name": "support.variable.sfr.padauk",
+          "match": "\\b(PWMGCUBH|PWMGCUBL|PWMG0DTH|PWMG0DTL|PWMG1DTH|PWMG1DTL|PWMG2DTH|PWMG2DTL|INTEGS2|MISCLVR|PWMGCLK|INTEGS|RSTSTT|TMBASE|PWMG0C|PWMG0S|PWMG1C|PWMG1S|PWMG2C|PWMG2S|COMPCH|INTEN|INTRQ|MISC2|CLKMD|EOSCR|IHRCR|ILRCR|GDIER|FPPAE|MULOP|MULRH|MISC|BGTR|T16M|FPPA|GPCC|GPCS|OSCR|RSTC|ROP|SP)\\b"
+        },
+        {
+          "name": "support.constant.padauk",
+          "match": "\\b(SYSCLK|IHRC|ILRC|EOSC|HIGH|VDD|GND|LOW)\\b"
+        }
+      ]
+    },
+    "chips": {
+      "patterns": [
+        {
+          "name": "support.constant.chip.padauk",
+          "match": "\\b(?:PMS|PFS|PMC|PFC|PDK)[0-9][0-9A-Za-z]*\\b"
+        }
+      ]
+    },
+    "local-label": {
+      "patterns": [
+        {
+          "name": "constant.language.local-label.padauk",
+          "match": "@[A-Za-z0-9_]+"
+        }
+      ]
+    },
+    "macro-param": {
+      "patterns": [
+        {
+          "name": "keyword.operator.concat.padauk",
+          "match": "##"
+        },
+        {
+          "match": "(?<=[A-Za-z0-9_])(#)([A-Za-z_][A-Za-z0-9_]*)",
+          "captures": {
+            "1": {
+              "name": "keyword.operator.macro.padauk"
+            },
+            "2": {
+              "name": "variable.parameter.macro.padauk"
+            }
+          }
+        }
+      ]
+    },
+    "byte-index": {
+      "patterns": [
+        {
+          "match": "(?<=[A-Za-z0-9_\\]])(\\$)([0-9])",
+          "captures": {
+            "1": {
+              "name": "keyword.operator.byte-index.padauk"
+            },
+            "2": {
+              "name": "constant.numeric.padauk"
+            }
+          }
+        }
+      ]
+    },
+    "function-call": {
+      "patterns": [
+        {
+          "match": "\\b([A-Za-z_][A-Za-z0-9_]*)[ \\t]*(?=\\()",
+          "captures": {
+            "1": {
+              "name": "entity.name.function.call.padauk"
+            }
+          }
+        }
+      ]
+    },
+    "operators": {
+      "patterns": [
+        {
+          "name": "keyword.operator.assignment.compile-time.padauk",
+          "match": "=>"
+        },
+        {
+          "name": "keyword.operator.padauk",
+          "match": "<<=|>>=|<<|>>|<=|>=|==|!=|&&|\\|\\||\\+\\+|--|[-+*/%&|^!~<>]=|[-+*/%&|^!~<>=]"
+        },
+        {
+          "name": "punctuation.separator.padauk",
+          "match": "[,;]"
+        }
+      ]
+    },
+    "bit-access": {
+      "patterns": [
+        {
+          "match": "(?<=[A-Za-z0-9_\\]])(\\.)([0-9]+|[A-Za-z_][A-Za-z0-9_]*)",
+          "captures": {
+            "1": {
+              "name": "punctuation.accessor.padauk"
+            },
+            "2": {
+              "name": "variable.other.bit.padauk"
+            }
+          }
+        }
+      ]
+    },
+    "macro-call": {
+      "patterns": [
+        {
+          "match": "^[ \\t]*(?!(?:continue|unsigned|volatile|default|disgint|pushwpc|stopexe|stopsys|wdreset|cneqsn|elseif|engint|extern|ldspth|ldsptl|ldtabh|ldtabl|popwpc|pushaf|return|signed|static|struct|switch|break|ceqsn|clear|const|delay|icall|igoto|ldt16|macro|pcadd|popaf|pushw|reset|sbyte|stt16|swapc|sword|wait0|wait1|while|addc|byte|call|case|comp|dzsn|else|goto|idxm|izsn|nadd|nmov|popw|reti|set0|set1|subc|swap|t0sn|t1sn|void|word|EQU|add|and|bit|dec|equ|for|inc|mov|mul|neg|nop|not|ret|slc|src|sub|tog|xch|xor|do|if|or|sl|sr)\\b)([A-Za-z_][A-Za-z0-9_]*)[ \\t]*(?=;)",
+          "captures": {
+            "1": {
+              "name": "entity.name.function.macro.call.padauk"
+            }
+          }
+        },
+        {
+          "match": "^[ \\t]*(?!(?:continue|unsigned|volatile|default|disgint|pushwpc|stopexe|stopsys|wdreset|cneqsn|elseif|engint|extern|ldspth|ldsptl|ldtabh|ldtabl|popwpc|pushaf|return|signed|static|struct|switch|break|ceqsn|clear|const|delay|icall|igoto|ldt16|macro|pcadd|popaf|pushw|reset|sbyte|stt16|swapc|sword|wait0|wait1|while|addc|byte|call|case|comp|dzsn|else|goto|idxm|izsn|nadd|nmov|popw|reti|set0|set1|subc|swap|t0sn|t1sn|void|word|EQU|add|and|bit|dec|equ|for|inc|mov|mul|neg|nop|not|ret|slc|src|sub|tog|xch|xor|do|if|or|sl|sr)\\b)([A-Za-z_][A-Za-z0-9_]*)[ \\t]+(?![ \\t])(?![-+*/%&|^=<>!~?:,;.\\[\\]{}()])",
+          "captures": {
+            "1": {
+              "name": "entity.name.function.macro.call.padauk"
+            }
+          }
+        }
+      ]
+    }
+  }
+}

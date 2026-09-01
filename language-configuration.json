@@ -1,0 +1,106 @@
+{
+  "comments": {
+    "lineComment": "//",
+    "blockComment": [
+      "/*",
+      "*/"
+    ]
+  },
+  "brackets": [
+    [
+      "{",
+      "}"
+    ],
+    [
+      "[",
+      "]"
+    ],
+    [
+      "(",
+      ")"
+    ]
+  ],
+  "autoClosingPairs": [
+    {
+      "open": "{",
+      "close": "}"
+    },
+    {
+      "open": "[",
+      "close": "]"
+    },
+    {
+      "open": "(",
+      "close": ")"
+    },
+    {
+      "open": "\"",
+      "close": "\"",
+      "notIn": [
+        "string",
+        "comment"
+      ]
+    },
+    {
+      "open": "'",
+      "close": "'",
+      "notIn": [
+        "string",
+        "comment"
+      ]
+    },
+    {
+      "open": "/*",
+      "close": " */",
+      "notIn": [
+        "string"
+      ]
+    }
+  ],
+  "surroundingPairs": [
+    [
+      "{",
+      "}"
+    ],
+    [
+      "[",
+      "]"
+    ],
+    [
+      "(",
+      ")"
+    ],
+    [
+      "\"",
+      "\""
+    ],
+    [
+      "'",
+      "'"
+    ],
+    [
+      "<",
+      ">"
+    ]
+  ],
+  "folding": {
+    "offSide": false,
+    "markers": {
+      "start": "^\\s*(?:\\.(?:[iI][fF][nN][dD][eE][fF]|[iI][fF][iI][dD][nN][iI]|[iI][fF][dD][iI][fF][iI]|[rR][eE][pP][eE][aA][tT]|[iI][fF][dD][eE][fF]|[iI][fF][iI][dD][nN]|[iI][fF][dD][iI][fF]|[fF][oO][rR][cC]|[fF][oO][rR]|[iI][fF])\\b|[A-Za-z_]\\w*[ \\t]+[mM][aA][cC][rR][oO]\\b)",
+      "end": "^\\s*\\.(?:[eE][nN][dD][iI][fF]|[eE][nN][dD][mM])\\b"
+    }
+  },
+  "indentationRules": {
+    "increaseIndentPattern": "^\\s*(?:\\.(?:[iI][fF][nN][dD][eE][fF]|[iI][fF][iI][dD][nN][iI]|[iI][fF][dD][iI][fF][iI]|[rR][eE][pP][eE][aA][tT]|[iI][fF][dD][eE][fF]|[iI][fF][iI][dD][nN]|[iI][fF][dD][iI][fF]|[fF][oO][rR][cC]|[fF][oO][rR]|[iI][fF]|[eE][lL][sS][eE]|[eE][lL][sS][eE][iI][fF])\\b|[A-Za-z_]\\w*[ \\t]+[mM][aA][cC][rR][oO]\\b).*$|^.*\\{[^}\"']*$",
+    "decreaseIndentPattern": "^\\s*(?:\\.(?:[eE][nN][dD][iI][fF]|[eE][nN][dD][mM]|[eE][lL][sS][eE]|[eE][lL][sS][eE][iI][fF])\\b|[})]).*$"
+  },
+  "onEnterRules": [
+    {
+      "beforeText": "^\\s*//.*$",
+      "action": {
+        "indent": "none",
+        "appendText": "// "
+      }
+    }
+  ]
+}

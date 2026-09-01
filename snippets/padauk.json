@@ -1,0 +1,78 @@
+{
+  "FPPA0 main function": {
+    "prefix": "fppa0",
+    "body": [
+      "void FPPA0 (void) {",
+      "\tADJUST_IC;",
+      "",
+      "\t$1",
+      "",
+      "\twhile (1) {",
+      "\t\t$0",
+      "\t}",
+      "}"
+    ],
+    "description": "FPPA0 entry point"
+  },
+  "Interrupt service routine": {
+    "prefix": "isr",
+    "body": [
+      "void Interrupt (void) {",
+      "\tpushaf;",
+      "\t$0",
+      "\tpopaf;",
+      "}"
+    ],
+    "description": "Interrupt service routine with context save/restore"
+  },
+  ".define": {
+    "prefix": ".define",
+    "body": [".define ${1:NAME}${2: ${3:value}}"],
+    "description": "Compile-time define"
+  },
+  "Conditional block": {
+    "prefix": ".if",
+    "body": [".if ${1:condition}", "\t$0", ".endif"],
+    "description": ".if / .endif"
+  },
+  "Conditional block with else": {
+    "prefix": ".ifelse",
+    "body": [".if ${1:condition}", "\t$2", ".else", "\t$0", ".endif"],
+    "description": ".if / .else / .endif"
+  },
+  "Defined check": {
+    "prefix": ".ifdef",
+    "body": [".ifdef ${1:SYMBOL}", "\t$0", ".endif"],
+    "description": ".ifdef / .endif"
+  },
+  "Not-defined check": {
+    "prefix": ".ifndef",
+    "body": [".ifndef ${1:SYMBOL}", "\t$0", ".endif"],
+    "description": ".ifndef / .endif"
+  },
+  "Macro definition": {
+    "prefix": "macro",
+    "body": ["${1:name} macro ${2:arg1}", "\t$0", ".endm"],
+    "description": "Macro definition"
+  },
+  "Unrolled repeat": {
+    "prefix": ".repeat",
+    "body": [".repeat ${1:count}", "\t$0", ".endm"],
+    "description": "Unrolled loop"
+  },
+  "Counted unrolled loop": {
+    "prefix": ".forc",
+    "body": [".forc ${1:i}, # ${2:count}", "\t$0", ".endm"],
+    "description": ".forc / .endm loop over a counter"
+  },
+  "Chip setup": {
+    "prefix": "adjustic",
+    "body": [".ADJUST_IC SYSCLK=IHRC/${1:2}, IHRC=${2:16000000} Hz, VDD=${3:5000} mV;"],
+    "description": ".ADJUST_IC clock and voltage setup"
+  },
+  "Pin configuration": {
+    "prefix": "$",
+    "body": ["$ ${1:PA.0} ${2|In,Out,Pull|};"],
+    "description": "Pin / register configuration statement"
+  }
+}
