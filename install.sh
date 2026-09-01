@@ -14,6 +14,33 @@ VERSION=$(python3 -c 'import json;print(json.load(open("package.json"))["version
 NAME=$(python3 -c 'import json;print(json.load(open("package.json"))["name"])')
 VSIX="$ROOT/$NAME-$VERSION.vsix"
 
+echo "==> checking the manifest"
+python3 - <<'PY'
+import json, os, sys
+
+m = json.load(open("package.json"))
+
+# VS Code writes __metadata into the manifest of an INSTALLED extension. Finding it
+# here means package.json was copied back out of ~/.vscode/extensions - i.e. a build
+# artifact overwrote the source. Building from it would ship VS Code's bookkeeping
+# and silently drop whatever the source manifest had gained since.
+if "__metadata" in m:
+    sys.exit(
+        "ERROR: package.json contains __metadata, which VS Code only writes into\n"
+        "       installed copies. This file came back out of ~/.vscode/extensions\n"
+        "       and is a build artifact, not the source.\n\n"
+        "       Recover it with:  git checkout package.json\n"
+        "       The repo builds INTO the extensions folder, never the other way round.")
+
+# The icon is easy to lose this way, and a missing one only shows up as a grey
+# placeholder on the Marketplace, so fail loudly instead.
+icon = m.get("icon")
+if not icon:
+    sys.exit('ERROR: package.json declares no "icon"; expected "icon.png".')
+if not os.path.exists(icon):
+    sys.exit("ERROR: package.json points at %s, which does not exist." % icon)
+PY
+
 echo "==> regenerating grammar and language configuration"
 python3 tools/gen_grammar.py
 
