@@ -1,60 +1,68 @@
 {
-	"name": "padauk-minic",
-	"displayName": "Padauk Mini-C",
-	"description": "Syntax highlighting for Padauk Mini-C (FPPA / PDK microcontrollers): compile-time directives, macros, PDK assembly mnemonics, SFRs and pin configuration statements.",
-	"version": "1.0.0",
-	"publisher": "local",
-	"license": "MIT",
-	"engines": {
-		"vscode": "^1.60.0"
-	},
-	"categories": [
-		"Programming Languages"
-	],
-	"keywords": [
-		"padauk",
-		"mini-c",
-		"minic",
-		"pdk",
-		"fppa",
-		"pms",
-		"pfs",
-		"microcontroller"
-	],
-	"contributes": {
-		"languages": [
-			{
-				"id": "padauk",
-				"aliases": [
-					"Padauk Mini-C",
-					"Mini-C",
-					"padauk"
-				],
-				"extensions": [
-					".pdkc",
-					".pdkh",
-					".minic"
-				],
-				"configuration": "./language-configuration.json"
-			}
-		],
-		"grammars": [
-			{
-				"language": "padauk",
-				"scopeName": "source.padauk",
-				"path": "./syntaxes/padauk.tmLanguage.json"
-			}
-		],
-		"snippets": [
-			{
-				"language": "padauk",
-				"path": "./snippets/padauk.json"
-			}
-		]
-	},
-	"__metadata": {
-		"installedTimestamp": 1788261865849,
-		"targetPlatform": "undefined",
-		"size": 42425
-	}
+  "name": "padauk-minic",
+  "displayName": "Padauk Mini-C",
+  "description": "Syntax highlighting for Padauk Mini-C (FPPA / PDK microcontrollers): compile-time directives, macros, PDK assembly mnemonics, SFRs and pin configuration statements.",
+  "version": "1.0.0",
+  "publisher": "local",
+  "license": "MIT",
+  "icon": "icon.png",
+  "engines": {
+    "vscode": "^1.60.0"
+  },
+  "categories": [
+    "Programming Languages"
+  ],
+  "keywords": [
+    "padauk",
+    "mini-c",
+    "minic",
+    "pdk",
+    "fppa",
+    "pms",
+    "pfs",
+    "microcontroller"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/pastaclub/vscode-padauk-mini-c.git"
+  },
+  "bugs": {
+    "url": "https://github.com/pastaclub/vscode-padauk-mini-c/issues"
+  },
+  "homepage": "https://github.com/pastaclub/vscode-padauk-mini-c#readme",
+  "galleryBanner": {
+    "color": "#12171f",
+    "theme": "dark"
+  },
+  "contributes": {
+    "languages": [
+      {
+        "id": "padauk",
+        "aliases": [
+          "Padauk Mini-C",
+          "Mini-C",
+          "padauk"
+        ],
+        "extensions": [
+          ".pdkc",
+          ".pdkh",
+          ".minic"
+        ],
+        "configuration": "./language-configuration.json"
+      }
+    ],
+    "grammars": [
+      {
+        "language": "padauk",
+        "scopeName": "source.padauk",
+        "path": "./syntaxes/padauk.tmLanguage.json"
+      }
+    ],
+    "snippets": [
+      {
+        "language": "padauk",
+        "path": "./snippets/padauk.json"
+      }
+    ]
+  }
 }
