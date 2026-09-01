@@ -2,3 +2,5 @@
 .vscodeignore
 build/**
 install.sh
+icon.svg
+tools/gen_icon.sh

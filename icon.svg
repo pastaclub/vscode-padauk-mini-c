@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="128" height="128" viewBox="0 0 128 128">
+  <defs>
+    <linearGradient id="body" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0"    stop-color="#3d4553"/>
+      <stop offset="0.18" stop-color="#2a3039"/>
+      <stop offset="1"    stop-color="#1b1f26"/>
+    </linearGradient>
+    <linearGradient id="pin" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0"   stop-color="#eef2f6"/>
+      <stop offset="0.5" stop-color="#c3cbd4"/>
+      <stop offset="1"   stop-color="#8e97a2"/>
+    </linearGradient>
+  </defs>
+
+  <!-- gull-wing leads, 4 per side, 1.27mm pitch scaled to the body -->
+  <g fill="url(#pin)">
+    <rect x="11" y="23.2" width="19" height="10" rx="2.5"/>
+    <rect x="11" y="47.1" width="19" height="10" rx="2.5"/>
+    <rect x="11" y="70.9" width="19" height="10" rx="2.5"/>
+    <rect x="11" y="94.8" width="19" height="10" rx="2.5"/>
+    <rect x="98" y="23.2" width="19" height="10" rx="2.5"/>
+    <rect x="98" y="47.1" width="19" height="10" rx="2.5"/>
+    <rect x="98" y="70.9" width="19" height="10" rx="2.5"/>
+    <rect x="98" y="94.8" width="19" height="10" rx="2.5"/>
+  </g>
+
+  <!-- moulded body -->
+  <rect x="28" y="18" width="72" height="92" rx="7" fill="url(#body)" stroke="#5b6672" stroke-width="1.6"/>
+
+  <!-- pin 1 marker -->
+  <circle cx="39.5" cy="29.5" r="4.2" fill="#79828d"/>
+
+  <!-- silkscreen marking -->
+  <text x="64" y="87" text-anchor="middle" font-family="Helvetica, Arial, sans-serif"
+        font-weight="bold" font-size="64" fill="#e6edf3">C</text>
+</svg>

@@ -20,7 +20,7 @@ python3 tools/gen_grammar.py
 echo "==> staging"
 rm -rf "$BUILD"
 mkdir -p "$BUILD/extension"
-for f in package.json README.md language-configuration.json syntaxes snippets tools; do
+for f in package.json README.md icon.png language-configuration.json syntaxes snippets tools; do
   cp -R "$f" "$BUILD/extension/"
 done
 cp LICENSE "$BUILD/extension/LICENSE.txt"   # OPC wants a known file extension
